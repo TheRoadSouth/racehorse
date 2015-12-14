@@ -1,7 +1,6 @@
 /**
- * Archives.com jQuery Alert Plugin
+ * Racehorse jQuery Alert Plugin
  * @version 0.5
- * {@link http://www.archivesux.com/wiki/doku.php?id=fed:ac-alert}
  * @requires pluginbridge.js
  * @author Martin Przybyla
  */
@@ -10,14 +9,14 @@
  * Main Alert Object
  * @type {Object}
  */
-var AcAlert = {
+var RhAlert = {
 
     /**
      * jQuery plugin name which can later be used to call the plugin
-     * Example: $("#Elem").acalert();
+     * Example: $("#Elem").rhalert();
      * @type {String}
      */
-    name: "acalert",
+    name: "rhalert",
 
     // plugin version
     version: 0.5,
@@ -37,15 +36,15 @@ var AcAlert = {
         position: "fixed",
         fade: 0,
         closeButton: true,
-        overlayTemplate: "<div id=\"AcOverlay\"></div>",
-        closeButtonTemplate: "<div id=\"AcAlertCloseWrap\"><a id=\"AcAlertClose\"></a></div>",
-        alertTemplate: "<div id=\"AcAlert\"><div id=\"AcAlertWrap\"><div id=\"AcAlertContent\"/></div></div>",
+        overlayTemplate: "<div id=\"RhOverlay\"></div>",
+        closeButtonTemplate: "<div id=\"RhAlertCloseWrap\"><a id=\"RhAlertClose\"></a></div>",
+        alertTemplate: "<div id=\"RhAlert\"><div id=\"RhAlertWrap\"><div id=\"RhAlertContent\"/></div></div>",
         onOpen: null,
         onClose: null
     },
 
     /**
-     * Init constructor method. This plugin is called differently than most AcPlugins.
+     * Init constructor method. This plugin is called differently than most RhPlugins.
      * @constructor
      * @param  {Object} contentOptions      String content or an HREF
      * @param  {Object} options             Passed in options to be merged with defaults
@@ -68,7 +67,7 @@ var AcAlert = {
         this.show(this.content);
         this.setupResize();
 
-        $("#AcAlertClose").click(function() {
+        $("#RhAlertClose").click(function() {
             _self.close();
         });
 
@@ -84,13 +83,13 @@ var AcAlert = {
 
         $("body").append(this.options.overlayTemplate, this.options.alertTemplate);
 
-        $("#AcAlert").css({
+        $("#RhAlert").css({
             "visibility": "visible",
             "opacity": 0
         });
 
         if (this.options.width !== null) {
-            $("#AcAlert").css({
+            $("#RhAlert").css({
                 "width": this.options.width
             });
         }
@@ -100,23 +99,23 @@ var AcAlert = {
         }
 
         if (this.options.height !== null) {
-            $("#AcAlert").css({
+            $("#RhAlert").css({
                 "height": this.options.height
             });
         }
 
         // insert alert content
-        $("#AcAlertWrap").html(content);
-        $("#AcAlert").prepend(this.options.closeButtonTemplate);
+        $("#RhAlertWrap").html(content);
+        $("#RhAlert").prepend(this.options.closeButtonTemplate);
 
         this.position();
 
         if (this.options.fade === false) {
-            $("#AcAlert").css({
+            $("#RhAlert").css({
                 "opacity": 1
             });
         } else {
-            $("#AcAlert").animate({
+            $("#RhAlert").animate({
                 "opacity": 1
             }, this.options.fade);
         }
@@ -152,7 +151,7 @@ var AcAlert = {
             bottom,
             left,
             paddingOuter = this.options.padding * 2,
-            $alert = $("#AcAlert"),
+            $alert = $("#RhAlert"),
             $alertHeight = $alert.height(),
             $alertWidth = $alert.width() + paddingOuter;
 
@@ -190,11 +189,11 @@ var AcAlert = {
      */
     responsiveWidth: function() {
         if ($(window).width() < this.options.width && this.options.responsive === true) {
-            $("#AcAlert").css({
+            $("#RhAlert").css({
                 "width": "80%"
             });
         } else {
-            $("#AcAlert").css({
+            $("#RhAlert").css({
                 "width": this.options.width
             });
         }
@@ -206,7 +205,7 @@ var AcAlert = {
     setupResize: function() {
         var _self = this;
 
-        $(window).on("resize.acalert", function() {
+        $(window).on("resize.rhalert", function() {
             _self.position();
             _self.responsiveWidth();
         });
@@ -217,8 +216,8 @@ var AcAlert = {
      * Removes alert window from DOM
      */
     close: function() {
-        $("#AcAlert, #AcOverlay").remove();
-        $(window).off("resize.acalert");
+        $("#RhAlert, #RhOverlay").remove();
+        $(window).off("resize.rhalert");
 
         // callback
         if (typeof this.options.onClose === "function") {
@@ -234,5 +233,5 @@ var AcAlert = {
 // END OF COMPONENT LOGIC //
 ////////////////////////////
 
-// register AcAlert object as a jQuery plugin
-$.plugin(AcAlert.name, AcAlert, true);
+// register RhAlert object as a jQuery plugin
+$.plugin(RhAlert.name, RhAlert, true);

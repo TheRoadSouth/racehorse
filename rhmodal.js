@@ -1,5 +1,5 @@
 /**
- * Archives.com jQuery Modal Plugin
+ * Racehorse jQuery Modal Plugin
  * @version 1.1
  * @author Martin Przybyla
  */
@@ -8,14 +8,14 @@
  * Main Modal Object
  * @type {Object}
  */
-var AcModal = {
+var RhModal = {
 
     /**
      * jQuery plugin name which can later be used to call the plugin
-     * Example: $("#Elem").acmodal();
+     * Example: $("#Elem").rhmodal();
      * @type {String}
      */
-    name: "acmodal",
+    name: "rhmodal",
 
     // plugin version
     version: 1.1,
@@ -49,15 +49,15 @@ var AcModal = {
         offsetRatio: 0.8,
         minHeight: 50,
         closeButton: true,
-        closeButtonTemplate: "<div id=\"AcCloseWrap\"><a id=\"AcClose\"></a></div>",
+        closeButtonTemplate: "<div id=\"RhCloseWrap\"><a id=\"RhClose\"></a></div>",
         closeOnBkgClick: true,
         animate: true,
         useHash: true,
         animateSpeed: 600,
         easingType: "easeInExpo",
         copyContent: false,
-        overlayTemplate: "<div id=\"AcOverlay\"></div>",
-        modalTemplate: "<div id=\"AcModal\"><div id=\"AcWrap\"><div id=\"AcContent\"/></div></div>",
+        overlayTemplate: "<div id=\"RhOverlay\"></div>",
+        modalTemplate: "<div id=\"RhModal\"><div id=\"RhWrap\"><div id=\"RhContent\"/></div></div>",
         customClass: null,
         onOpen: function() {},
         onClose: function() {},
@@ -83,17 +83,17 @@ var AcModal = {
 
         // build modal markup on click
         this.$elem.click(function () {
-            if (!$("#AcModal").is(":visible")) {
+            if (!$("#RhModal").is(":visible")) {
                 _self.show();
                 _self.setupResize();
 
-                $("#AcClose").click(function () {
+                $("#RhClose").click(function () {
                     _self.close();
                 });
 
                 // close by clicking the overlay
                 if (_self.options.closeOnBkgClick) {
-                    $("#AcOverlay").click(function () {
+                    $("#RhOverlay").click(function () {
                         _self.close();
                     });
                 }
@@ -154,15 +154,15 @@ var AcModal = {
         } else {
             $("body").append(this.options.overlayTemplate, this.options.modalTemplate);
             modalContent = this.options.content;
-            $("#AcContent").append(modalContent);
+            $("#RhContent").append(modalContent);
         }
 
         if (this.options.customClass) {
-            $("#AcModal").addClass(this.options.customClass);
+            $("#RhModal").addClass(this.options.customClass);
         }
 
         if (this.options.position === "absolute") {
-            $("#AcModal").css({
+            $("#RhModal").css({
                 "position": "absolute"
             });
         }
@@ -174,17 +174,17 @@ var AcModal = {
         }
 
         if (this.options.autoContentHeight) {
-            this.contentHeight = $("#AcContent").height();
+            this.contentHeight = $("#RhContent").height();
         }
 
         // attach close button
         if (this.options.closeButton) {
-            $("#AcModal").prepend(this.options.closeButtonTemplate);
+            $("#RhModal").prepend(this.options.closeButtonTemplate);
         }
 
         this.center();
         this.animate();
-        
+
         //add "#r"
         if (this.options.useHash === true) {
             //save last hash
@@ -205,8 +205,8 @@ var AcModal = {
      * @return {Undefined}            Animates modal dialog
      */
     animate: function () {
-        var $modal = $("#AcModal"),
-            $overlay = $("#AcOverlay"),
+        var $modal = $("#RhModal"),
+            $overlay = $("#RhOverlay"),
             scrollPosition = $(window).scrollTop();
 
         $overlay.hide();
@@ -235,7 +235,7 @@ var AcModal = {
     center: function () {
         var top,
             paddingOuter = this.options.padding * 2,
-            $modal = $("#AcModal"),
+            $modal = $("#RhModal"),
             $modalHeight = $modal.height();
 
         // get offsets - padding
@@ -266,8 +266,8 @@ var AcModal = {
      */
     checkHeight: function () {
         var winHeight = $(window).height(),
-            modalHeight = $("#AcModal").height(),
-            contentHeight = $("#AcContent").height();
+            modalHeight = $("#RhModal").height(),
+            contentHeight = $("#RhContent").height();
 
         if (winHeight < modalHeight && this.options.scroll !== false) {
             this.resize(contentHeight);
@@ -285,8 +285,8 @@ var AcModal = {
             paddingOuter = this.options.padding * 2,
             newHeight,
             newTopMargin,
-            $modal = $("#AcModal"),
-            $modalWrap = $("#AcWrap");
+            $modal = $("#RhModal"),
+            $modalWrap = $("#RhWrap");
 
         this.center();
 
@@ -340,7 +340,7 @@ var AcModal = {
         if (this.options.height === null && this.options.autoResize === true) {
 
             var timeOut = false;
-            $(window).on("resize.acmodal", function () {
+            $(window).on("resize.rhmodal", function () {
 
                 if (timeOut !== false) {
                     clearTimeout(timeOut);
@@ -349,7 +349,7 @@ var AcModal = {
                 timeOut = setTimeout(timeOutFunc, _self.options.resizeTimeout);
 
                 function timeOutFunc() {
-                    $("#AcModal").clearQueue();
+                    $("#RhModal").clearQueue();
                     _self.resize();
                     _self.center();
                     _self.checkHeight();
@@ -360,8 +360,8 @@ var AcModal = {
             // otherwise just keep the modal centered and the width responsive
         } else {
 
-            $(window).on("resize.acmodal", function () {
-                $("#AcModal").clearQueue();
+            $(window).on("resize.rhmodal", function () {
+                $("#RhModal").clearQueue();
                 _self.center();
             });
 
@@ -378,8 +378,8 @@ var AcModal = {
         this.options.onBeforeClose();
 
         if (this.options.fadeOut !== false) {
-            $("#AcOverlay").fadeOut(_self.options.fadeOut);
-            $("#AcModal").fadeOut(_self.options.fadeOut, function () {
+            $("#RhOverlay").fadeOut(_self.options.fadeOut);
+            $("#RhModal").fadeOut(_self.options.fadeOut, function () {
                 _self.remove(callback);
             });
         } else {
@@ -398,19 +398,19 @@ var AcModal = {
      * Removes modal modal markup and event handlers
      */
     remove: function (callback) {
-        $("#AcOverlay").remove();
+        $("#RhOverlay").remove();
 
         if (this.options.href && this.options.href !== "") {
             this.unwrapContent();
             $(this.options.href).css({
                 "display": "none"
             });
-            $("#AcCloseWrap").remove();
+            $("#RhCloseWrap").remove();
         } else {
-            $("#AcModal").remove();
+            $("#RhModal").remove();
         }
 
-        $(window).off("resize.acmodal");
+        $(window).off("resize.rhmodal");
         // callback
         if (typeof this.options.onClose === "function" || typeof callback === "function") {
             if (typeof callback !== "undefined") {
@@ -423,12 +423,12 @@ var AcModal = {
     },
 
     /**
-     * Recursive function to remove AcModal wrap HTML from content
+     * Recursive function to remove RhModal wrap HTML from content
      */
     unwrapContent: function () {
-        var acmodal = $("#AcModal").length;
+        var rhmodal = $("#RhModal").length;
 
-        if (!acmodal) {
+        if (!rhmodal) {
             return false;
         } else {
             $(this.options.href).unwrap();
@@ -442,5 +442,5 @@ var AcModal = {
 // END OF COMPONENT LOGIC //
 ////////////////////////////
 
-// register AcModal object as a jQuery plugin
-$.plugin(AcModal.name, AcModal);
+// register RhModal object as a jQuery plugin
+$.plugin(RhModal.name, RhModal);

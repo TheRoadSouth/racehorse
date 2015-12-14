@@ -1,5 +1,5 @@
 ﻿/**
- * jQuery Plugin Bridge
+ * Racehorse jQuery Plugin Bridge
  * @version 0.8
  *
  * Converts an object into a jQuery plugin either by instantiating it
@@ -21,12 +21,12 @@ $.plugin = function(name, object, $namespace) {
 
         /**
          * If there is no selector, call the init function directly.
-         * See AcAlert plugin for a usage example.
+         * See RhAlert plugin for a usage example.
          */
         if (!this.selector) {
 
             /**
-             * This allows for the plugin to be used in AcAlert in the format
+             * This allows for the plugin to be used in RhAlert in the format
              * $.pluginname('content', options); or $.pluginname(options);
              */
             if (typeof arguments[0] === "string") {
@@ -68,9 +68,7 @@ $.plugin = function(name, object, $namespace) {
 
     // also add to jQuery top level namespace (optional)
     if ($namespace === true) {
-
         $[name] = $.fn[name];
-
     }
 
 };

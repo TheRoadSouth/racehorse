@@ -1,11 +1,13 @@
-define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridge"], function() {
+// currently set up to work in a require.js environment
+// ToDo: make this generic & add CSS
+define("plugins/rhnav", ["jquery", "polyfills/object.create", "utils/pluginbridge"], function() {
 
     /**
-     * Archives.com AcNav jQuery Plugin
+     * Racehorse RhNav jQuery Plugin
      * @version 0.2
      * @author Martin Przybyla
      *
-     * USAGE: $("#NavId").acnav();
+     * USAGE: $("#NavId").rhnav();
      *
      * TODOS:
      * - Tie in with logged in status and secondary nav
@@ -17,14 +19,14 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
      * Main Plugin Object
      * @type {Object}
      */
-    var AcNav = {
+    var RhNav = {
 
         /**
          * jQuery plugin name which can later be used to call the plugin
-         * Example: $('body').acnav();
+         * Example: $('body').rhnav();
          * @type {String}
          */
-        name: 'acnav',
+        name: 'rhnav',
 
         // plugin version
         version: 0.2,
@@ -38,16 +40,16 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
             moreMenuText: "More",
 
             // outer container ul element for entire dropdown
-            moreOuterMenuId: "AcNavMoreOuter",
+            moreOuterMenuId: "RhNavMoreOuter",
 
             // outer li element (i.e. "More" link)
-            moreLinkId: "AcNavMoreLink",
+            moreLinkId: "RhNavMoreLink",
 
             // li element that contains nested ul
-            moreMenuLinkId: "AcNavMoreMenuLink",
+            moreMenuLinkId: "RhNavMoreMenuLink",
 
             // inner nested ul
-            moreMenuId: "AcNavMoreMenu",
+            moreMenuId: "RhNavMoreMenu",
 
             // create a dropdown?
             dropdown: true,
@@ -56,7 +58,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
             dropdownTimeout: 200,
 
             // selector(s) that activate hover state for dropdown
-            dropdownHoverSelectors: "#AcNavMoreLink, #AcNavMoreMenuLink",
+            dropdownHoverSelectors: "#RhNavMoreLink, #RhNavMoreMenuLink",
 
             // time before events fire on window resize
             resizeTimeout: 0,
@@ -104,7 +106,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
 
             // hide navRightOpen button if not necessary
             if (this.options.navRight !== true) {
-                $("body").addClass("ac-nav-right-false");
+                $("body").addClass("rh-nav-right-false");
             }
 
             // setup up button toggle and don't go further if dropdown is not necessary
@@ -140,7 +142,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
 
             if (!this.initialWidths && this.viewport().width > this.options.mobileBreakpoint) {
                 for (var i = 0; i < this.fullNav.length; i++) {
-                    $(this.fullNav[i]).data("ac-nav-width", this.fullNav[i].offsetWidth);
+                    $(this.fullNav[i]).data("rh-nav-width", this.fullNav[i].offsetWidth);
                     elemWidths[i] = this.fullNav[i].offsetWidth;
                 }
 
@@ -165,7 +167,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
             var _self = this,
                 timeOut = false;
 
-            $(window).on("resize.acnav", function() {
+            $(window).on("resize.rhnav", function() {
 
                 if (timeOut !== false) {
                     clearTimeout(timeOut);
@@ -281,15 +283,15 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
             var body = $("body"),
                 _self = this;
 
-            // add ac-nav class to BODY
-            $(body).addClass("ac-nav");
+            // add rh-nav class to BODY
+            $(body).addClass("rh-nav");
 
             $("#NavOpenLeft").on("click", function() {
-                $(body).toggleClass("ac-nav-left");
+                $(body).toggleClass("rh-nav-left");
             });
 
             $("#NavOpenRight").on("click", function() {
-                $(body).toggleClass("ac-nav-right");
+                $(body).toggleClass("rh-nav-right");
             });
         },
 
@@ -369,7 +371,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
          */
         manageFlyouts: function() {
             if (this.viewport().width > this.options.mobileBreakpoint) {
-                $("body").removeClass("ac-nav-left ac-nav-right");
+                $("body").removeClass("rh-nav-left rh-nav-right");
             }
         },
 
@@ -393,14 +395,14 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
 
             // if main nav has no hidden elements don't show "more" menu
             if (numElemsHidden < 1) {
-                $(outerMenu).siblings("ul").removeClass("ac-nav-more-active");
+                $(outerMenu).siblings("ul").removeClass("rh-nav-more-active");
 
                 outerMenu.style.display = "none";
                 this.fullNav[this.fullNav.length - 1].style.display = "inline-block";
 
                 // otherwise show additional dropdown menu
             } else {
-                $(outerMenu).siblings("ul").addClass("ac-nav-more-active");
+                $(outerMenu).siblings("ul").addClass("rh-nav-more-active");
 
 
                 outerMenu.style.display = "block";
@@ -430,7 +432,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
                 lastHiddenWidth;
 
             for (var i = 0; i < full.length; i++) {
-                if ($(full[i]).hasClass("ac-nav-hidden")) {
+                if ($(full[i]).hasClass("rh-nav-hidden")) {
                     hidden.push(full[i]);
                 } else {
                     shown.push(full[i]);
@@ -438,7 +440,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
             }
 
             lastHidden = hidden[0];
-            lastHiddenWidth = $(lastHidden).data("ac-nav-width");
+            lastHiddenWidth = $(lastHidden).data("rh-nav-width");
 
             return {
                 full: full,
@@ -462,7 +464,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
             if (!elem) {
                 return;
             } else {
-                $(elem).addClass("ac-nav-hidden");
+                $(elem).addClass("rh-nav-hidden");
                 this.checkWidth();
             }
         },
@@ -478,7 +480,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
             if (!elem) {
                 return;
             } else {
-                $(elem).removeClass("ac-nav-hidden");
+                $(elem).removeClass("rh-nav-hidden");
                 this.checkWidth();
             }
         },
@@ -488,7 +490,7 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
          * @return {undefined}
          */
         activateSidePanels: function() {
-            $(this.getList().full).removeClass("ac-nav-hidden");
+            $(this.getList().full).removeClass("rh-nav-hidden");
             $(this.getList().full).removeAttr("style");
             document.getElementById(this.options.moreOuterMenuId).style.display = "none";
         }
@@ -500,8 +502,8 @@ define("plugins/acnav", ["jquery", "polyfills/object.create", "utils/pluginbridg
     ////////////////////////////
 
     // register NewPlugin object as a jQuery plugin
-    $.plugin(AcNav.name, AcNav);
+    $.plugin(RhNav.name, RhNav);
 
-    return AcNav;
+    return RhNav;
 
 });

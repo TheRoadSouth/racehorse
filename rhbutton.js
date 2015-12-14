@@ -1,5 +1,5 @@
 /**
- * Archives.com AcButton jQuery Plugin
+ * Racehorse RhButton jQuery Plugin
  * @version 0.1
  * @author Martin Przybyla
  */
@@ -8,14 +8,14 @@
  * Main Plugin Object
  * @type {Object}
  */
-var AcButton = {
+var RhButton = {
 
     /**
      * jQuery plugin name which can later be used to call the plugin
      * Example: $('#Elem').newplugin();
      * @type {String}
      */
-    name: 'acbutton',
+    name: 'rhbutton',
 
     // plugin version
     version: 0.1,
@@ -190,11 +190,11 @@ var AcButton = {
             textNode.text(textObj.inProcess);
             this.$elem.addClass(this.options.processingClass);
 
-            if (this.options.ajax === true) { 
+            if (this.options.ajax === true) {
                 $(document).ajaxComplete(function () {
                     textNode.text(_self.originalText);
                     _self.$elem.removeClass(_self.options.processingClass).removeAttr("disabled");
-                });    
+                });
             }
 
             if (textObj.success !== '' && this.options.autoSuccess === true) {
@@ -275,4 +275,4 @@ var AcButton = {
 ////////////////////////////
 
 // register NewPlugin object as a jQuery plugin
-$.plugin(AcButton.name, AcButton);
+$.plugin(RhButton.name, RhButton);

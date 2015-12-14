@@ -1,21 +1,21 @@
 /**
- * Archives.com $ AcTable Plugin
+ * Racehorse rhTable Plugin
  * @version 0.6
  * @author Martin Przybyla
  */
 
 /**
- * Main AcTable Object
+ * Main RhTable Object
  * @type {Object}
  */
-var AcTable = {
+var RhTable = {
 
 	/**
 	 * $ plugin name which can later be used to call the plugin
-	 * Example: $("#Elem").actable();
+	 * Example: $("#Elem").rhtable();
 	 * @type {String}
 	 */
-	name: "actable",
+	name: "rhtable",
 
 	// plugin version
 	version: 0.6,
@@ -55,16 +55,16 @@ var AcTable = {
 
 		// get initial table markup and add ID
 		this.tableId = this.options.tableId || this.elem.id;
-		this.actable = $(this.options.initialTableMarkup);
-		this.actable.prop("id", this.tableId);
+		this.rhtable = $(this.options.initialTableMarkup);
+		this.rhtable.prop("id", this.tableId);
 
-		// add original table classes and actable class
+		// add original table classes and rhtable class
 		if (this.options._tableClass !== "") {
-			this.actable.addClass(this.options._tableClass);
+			this.rhtable.addClass(this.options._tableClass);
 		}
 		this.tableClasses = this.$elem.attr("class");
 		if (this.tableClasses !== "") {
-			this.actable.addClass(this.tableClasses);
+			this.rhtable.addClass(this.tableClasses);
 		}
 
 		// count columns and add column class to table
@@ -77,23 +77,23 @@ var AcTable = {
 			if (this.$elem.hasClass("ac-table-sm")) {
 				return;
 			}
-			this.actableRows = this.toMobile();
-			this.actable.append(this.actableRows);
+			this.rhtableRows = this.toMobile();
+			this.rhtable.append(this.rhtableRows);
 
 		} else if (this.options.type !== "" && this.options.type === "large") {
 
 			if (this.$elem.hasClass("ac-table-lg")) {
 				return;
 			}
-			this.actableHeader = this.toFullSize(this.toColumns).header;
-			this.actableRows = this.toFullSize(this.toColumns).tableContent;
-			this.actable.append(this.actableHeader);
-			this.actable.append(this.actableRows);
+			this.rhtableHeader = this.toFullSize(this.toColumns).header;
+			this.rhtableRows = this.toFullSize(this.toColumns).tableContent;
+			this.rhtable.append(this.rhtableHeader);
+			this.rhtable.append(this.rhtableRows);
 
 		}
 
 		// append table rows, insert table and remove previous version
-		this.$elem.before(this.actable);
+		this.$elem.before(this.rhtable);
 		this.$elem.remove();
 
 		// return this for chaining / prototype
@@ -118,13 +118,13 @@ var AcTable = {
 			currInput;
 
 		// set up the proper class for the table
-		this.actable.removeClass("ac-table-lg");
-		this.actable.addClass("ac-table-sm");
+		this.rhtable.removeClass("ac-table-lg");
+		this.rhtable.addClass("ac-table-sm");
 
 		// count columns and add column class to table
 		var toColumns = this.getColumnCount(this.$elem);
 		this.toColumns = toColumns;
-		this.actable.addClass("ac-cols-" + this.toColumns);
+		this.rhtable.addClass("ac-cols-" + this.toColumns);
 
 		this.$elem.find("col").each(function(index, value) {
 			colClasses.push($(this).attr("class"));
@@ -188,8 +188,8 @@ var AcTable = {
 			colgroup;
 
 		// set up the proper class for the table
-		this.actable.removeClass("ac-table-sm");
-		this.actable.addClass("ac-table-lg");
+		this.rhtable.removeClass("ac-table-sm");
+		this.rhtable.addClass("ac-table-lg");
 
 		// loop through and create a table with colgroups
 		if (this.$elem.hasClass("ac-colgroup")) {
@@ -340,7 +340,7 @@ var AcTable = {
 
 		} else {
 
-			console.warn(AcTable.name + ": unable to count columns");
+			console.warn(RhTable.name + ": unable to count columns");
 
 		}
 
@@ -353,5 +353,5 @@ var AcTable = {
 // END OF COMPONENT LOGIC //
 ////////////////////////////
 
-// register AcTable object as a $ plugin
-$.plugin(AcTable.name, AcTable);
+// register RhTable object as a $ plugin
+$.plugin(RhTable.name, RhTable);

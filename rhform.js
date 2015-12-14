@@ -1,5 +1,5 @@
 /**
- * Archives.com AcForm Plugin
+ * Rrhehorse RhForm Plugin
  * @version 0.2
  * @author Martin Przybyla
  */
@@ -8,14 +8,14 @@
  * Main Plugin Object
  * @type {Object}
  */
-var AcForm = {
+var RhForm = {
 
     /**
      * jQuery plugin name which can later be used to call the plugin
      * Example: $('#Elem').newplugin();
      * @type {String}
      */
-    name: "acform",
+    name: "rhform",
 
     // plugin version
     version: 0.2,
@@ -27,12 +27,12 @@ var AcForm = {
     options: {
         formErrorTemplate: "<div/>",
         formErrorText: "There were one or more errors in the form. Please double-check the fields marked in red.",
-        errorClassForm: "ac-form-invalid",
+        errorClassForm: "rh-form-invalid",
         errorClassInput: "input-validation-error",
-        errorClassContainer: "ac-form-container-error",
-        checkBoxClass: "ac-form-checkbox",
-        radioClass: "ac-form-radio",
-        checkedClass: "ac-form-checked",
+        errorClassContainer: "rh-form-container-error",
+        checkBoxClass: "rh-form-checkbox",
+        radioClass: "rh-form-radio",
+        checkedClass: "rh-form-checked",
         errorContainerId: "",
         intercept: false,
         showErrorBar: true
@@ -78,7 +78,7 @@ var AcForm = {
         // return this for chaining / prototype
         return this;
     },
-   
+
 
     /**
      * Overrides jQuery.validate defaultShowError method
@@ -94,15 +94,15 @@ var AcForm = {
                 var error = this.errorList[i];
                 if (this.settings.highlight) {
                     this.settings.highlight.call(this, error.element, this.settings.errorClass, this.settings.validClass);
-                    $(error.element).parents(".ac-form-element").addClass(_self.options.errorClassContainer);
+                    $(error.element).parents(".rh-form-element").addClass(_self.options.errorClassContainer);
                 }
                 this.showLabel(error.element, error.message);
                 _self.showGeneralFormError();
             }
             if (this.errorList.length) {
                 this.toShow = this.toShow.add(this.containers);
-            } 
-            
+            }
+
             //hide error bar if there are no more invalid elements
             if (this.numberOfInvalids() === 0) {
                 _self.$elem.find(errorClass).hide();
@@ -116,12 +116,12 @@ var AcForm = {
             if (this.settings.unhighlight) {
                 for (i = 0, elements = this.validElements(); elements[i]; i++) {
                     this.settings.unhighlight.call(this, elements[i], this.settings.errorClass, this.settings.validClass);
-                    if ($(elements[i]).parents(".ac-exact-search").size() === 0) {
-                        $(elements[i]).parents(".ac-form-element").removeClass(_self.options.errorClassContainer);
+                    if ($(elements[i]).parents(".rh-exact-search").size() === 0) {
+                        $(elements[i]).parents(".rh-form-element").removeClass(_self.options.errorClassContainer);
                     }
                 }
             }
-        };  
+        };
     },
 
     /**
@@ -177,12 +177,12 @@ var AcForm = {
      */
     focusStateSelect: function () {
         var _self = this;
-        $(this.$elem).find(".ac-form-select select").on({
+        $(this.$elem).find(".rh-form-select select").on({
             "focus": function () {
-                $(this).parents(".ac-select-wrapper").addClass("focused");
+                $(this).parents(".rh-select-wrapper").addClass("focused");
             },
             "focusout": function () {
-                $(this).parents(".ac-select-wrapper").removeClass("focused");
+                $(this).parents(".rh-select-wrapper").removeClass("focused");
             }
         });
     },
@@ -193,25 +193,25 @@ var AcForm = {
      */
     exactBoxFocus: function () {
         //check on load to see if any text boxes have a value and show the exact checkbox
-        $(this.$elem).find(".ac-exact-search").siblings("input").each(function () {
+        $(this.$elem).find(".rh-exact-search").siblings("input").each(function () {
             if ($(this).val().length > 0) {
-                $(this).parent().addClass("ac-exact-visible");
+                $(this).parent().addClass("rh-exact-visible");
             }
         });
 
         //add listener event for hover
-        $(this.$elem).find(".ac-exact-search").hover( function () {
-            $(this).parent().addClass("ac-exact-visible");
+        $(this.$elem).find(".rh-exact-search").hover( function () {
+            $(this).parent().addClass("rh-exact-visible");
         }, function () {
             if (!$(this).find("input[type='checkbox']").is(":checked") && !$(this).siblings("input").is(":focus")) {
-                $(this).parent().removeClass("ac-exact-visible");
+                $(this).parent().removeClass("rh-exact-visible");
             }
         });
         //add event listeners for focus into and out of text fields and handle show/hide of exact checkboxes
-        $(this.$elem).find(".ac-exact-search").siblings("input").on({
+        $(this.$elem).find(".rh-exact-search").siblings("input").on({
             "focus": function () {
-                if ($(this).siblings(".ac-exact-search").size() > 0) {
-                    $(this).parent().addClass("ac-exact-visible");
+                if ($(this).siblings(".rh-exact-search").size() > 0) {
+                    $(this).parent().addClass("rh-exact-visible");
                     $(this).on("keydown", function (event) {
                         if (event.keyCode === 9 && !event.shiftKey) {
                             if ($(this).val().length === 0) {
@@ -224,30 +224,30 @@ var AcForm = {
             },
             "focusout": function () {
                 var $self = $(this),
-                    $exactCheckbox = $self.siblings(".ac-exact-search").find("input[type='checkbox']");
+                    $exactCheckbox = $self.siblings(".rh-exact-search").find("input[type='checkbox']");
                 window.setTimeout(function () {
                     //if 1) the textbox is empty and the exact Checkbox is not focused or 2) if the exactCheckbox is not focused and not checked
                     if (($self.val().length === 0 && !$exactCheckbox.is(":focus")) || (!$exactCheckbox.is(":focus") && !$exactCheckbox.is(":checked"))) {
-                        $self.parent().removeClass("ac-exact-visible").find(".ac-exact-search input[type='checkbox']").prop("checked", false);
+                        $self.parent().removeClass("rh-exact-visible").find(".rh-exact-search input[type='checkbox']").prop("checked", false);
                     }
                 }, 200);
             }
         });
         //show/hide exact checkboxes on focus/focusout
-        $(this.$elem).find(".ac-exact-search input").on({
+        $(this.$elem).find(".rh-exact-search input").on({
             "focus": function () {
-                $(this).parent().parent().addClass("ac-exact-visible");
+                $(this).parent().parent().addClass("rh-exact-visible");
             },
             "focusout": function () {
                 if (!$(this).is(":checked")) {
-                    $(this).parent().parent().removeClass("ac-exact-visible");
+                    $(this).parent().parent().removeClass("rh-exact-visible");
                 } else if ($(this).is(":checked")) {
                     var $self = $(this),
                         $siblingInput = $(this).parent().siblings("input").eq(0);
                     window.setTimeout(function () {
                         if ($siblingInput.val().length === 0 && !$siblingInput.is(":focus")) {
                             $self.prop("checked", false);
-                            $self.parent().parent().removeClass("ac-exact-visible");
+                            $self.parent().parent().removeClass("rh-exact-visible");
                         }
                     }, 200);
                 }
@@ -261,14 +261,14 @@ var AcForm = {
      */
     radioGroupValidation: function() {
         var _self = this,
-            radioGroup = $(".ac-radio-group"),
+            radioGroup = $(".rh-radio-group"),
             error = "." + this.options.errorClassForm;
         inputs = radioGroup.find("." + this.options.radioClass);
 
         inputs.on("click", function() {
-            $(this).siblings().children().removeClass("input-validation-error error ac-form-container-error");
+            $(this).siblings().children().removeClass("input-validation-error error rh-form-container-error");
             $(this).siblings(".field-validation-error").hide();
-            _self.$elem.find(".ac-form-invalid").hide();
+            _self.$elem.find(".rh-form-invalid").hide();
         });
     },
 
@@ -289,7 +289,7 @@ var AcForm = {
                 $form.find(error).show();
             }
             if (typeof customError === "string") {
-                $(".ac-form-invalid").text(customError);
+                $(".rh-form-invalid").text(customError);
             }
         }
     }
@@ -300,4 +300,4 @@ var AcForm = {
 ////////////////////////////
 
 // register NewPlugin object as a jQuery plugin
-$.plugin(AcForm.name, AcForm);
+$.plugin(RhForm.name, RhForm);
